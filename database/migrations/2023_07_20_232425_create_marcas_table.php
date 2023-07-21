@@ -16,7 +16,7 @@ class CreateMarcasTable extends Migration
         Schema::create('marcas', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('url_logo');
+            $table->string('url_logo')->nullable();
             ## 1 = Ativo | 0 = Inativo
             $table->boolean('ativo')->default(1);
             $table->timestamps();
