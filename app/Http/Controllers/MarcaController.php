@@ -10,11 +10,19 @@ class MarcaController extends Controller
     
     public function index()
     {
-        $marcas = Marca::get();
+        $marcas = Marca::where(['ativo' => 1])->get();
         $arrayProps = [
             'marcas' => $marcas
         ];
         return view('marcas.index', $arrayProps);
+    }
+
+    public function edit($id){
+        $marca = Marca::find($id);
+        $arrayProps = [
+            'marca' => $marca
+        ];
+        return view('marcas.edit', $arrayProps);
     }
 
     public function store(Request $request){
@@ -36,7 +44,30 @@ class MarcaController extends Controller
         }
     }
 
-    public function edit(Request $request){
-        return true;
+    public function update(Request $request){
+        try{
+            $marca = Marca::find($request->id);
+            $marca->nome = $request->nome;
+
+            if($request->hasFile('file_logo')){
+                $photo = $request->file('file_logo');
+                $filename = time() . "." . $photo->getClientOriginalExtension();
+                $photo->move(public_path('photos'), $filename);
+                $marca->url_logo = 'photos/'. $filename;
+            }
+            
+            $marca->save();
+
+            return redirect()->route('marcas');
+        }catch(\Exception $e){
+            throw $e;
+        }
     }
+
+    public function delete(Request $request){
+        $marca = Marca::find($request->id);
+        $marca->ativo = 0;
+        $marca->save();
+    }
+    
 }

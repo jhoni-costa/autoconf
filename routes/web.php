@@ -26,7 +26,9 @@ Route::middleware(['auth'])->group(function(){
     Route::group(['prefix' => 'marcas'], function (){
         Route::get('/', [App\Http\Controllers\MarcaController::class, 'index'])->name('marcas');
         Route::post('/', [App\Http\Controllers\MarcaController::class, 'store'])->name('marcas.store');
-        Route::post('/edit', [App\Http\Controllers\MarcaController::class, 'edit'])->name('marcas.edit');
+        Route::post('/update', [App\Http\Controllers\MarcaController::class, 'update'])->name('marcas.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\MarcaController::class, 'edit'])->name('marcas.edit');
+        Route::post('/delete', [App\Http\Controllers\MarcaController::class, 'delete'])->name('marcas.delete');
     });
     
 });

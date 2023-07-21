@@ -11,14 +11,13 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label for="nome" class="form-label">Nome:</label>
-                            <input type="text" class="form-control" id="nome" name='nome' placeholder="">
+                            <input type="text" required class="form-control" id="nome" name='nome' placeholder="Marca ...">
                         </div>
                         <div class="col-sm-12">
                             <label for="formFile" class="form-label">Logo...</label>
-                            <input class="form-control" type="file" id="file_logo" name="file_logo">
+                            <input class="form-control" required type="file" id="file_logo" name="file_logo">
                         </div>
                     </div>
-
 
                 </form>
             </div>

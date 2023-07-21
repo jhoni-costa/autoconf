@@ -1,3 +1,29 @@
+<script>
+    remove = (id) => {
+        if (confirm('Deseja realmente excluir esta marca?')) {
+
+            $.ajax({
+                    url: '{{ route('marcas.delete') }}',
+                    type: 'post',
+                    data: {
+                        "id": id,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    beforeSend: function() {
+                        //                $("#resultado").html("ENVIANDO...");
+                    }
+                })
+                .done(function(ret) {
+                    alert("Marca removida com sucesso!");
+                    window.location.reload(true);
+                })
+                .fail(function(jqXHR, textStatus, msg) {
+                    console.log(jqXHR, textStatus, msg);
+                });
+        }
+    }
+</script>
+
 @extends('layouts.app')
 
 @section('content')
@@ -27,30 +53,31 @@
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="text-center">
                                     @forelse($marcas as $marca)
                                         <tr>
                                             <td class="text-center">{{ $marca->id }}</td>
                                             <td>
-                                                <img width="50px" height="50px" src="{{ asset($marca->url_logo) }}" alt="">
+                                                <img style="max-width: 50px; max-height: 50px"
+                                                    src="{{ asset($marca->url_logo) }}" alt="">
                                             </td>
                                             <td class="text-center">{{ $marca->nome }}</td>
                                             <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-danger btn-sm dropdown-toggle"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                <div class="btn-group" role="group"
+                                                    aria-label="Basic mixed styles example">
+                                                    <a type="button" href='{{ route('marcas.edit', $marca->id) }}'
+                                                        class="btn btn-warning">
                                                         <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class='dropdown-item'
-                                                                href='{{ route('marcas.edit', $marca->id) }}'>Editar
-                                                        </li>
-                                                    </ul>
+                                                    </a>
+                                                    <button type="button" onclick="remove({{ $marca->id }})"
+                                                        class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                 </div>
+
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
+
                                             <td class="text-center" colspan="3">Nenhum registro encontrado</td>
                                         </tr>
                                     @endforelse
