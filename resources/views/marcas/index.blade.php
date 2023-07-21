@@ -22,6 +22,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Logo</th>
                                         <th>Marca</th>
                                         <th>Ações</th>
                                     </tr>
@@ -30,6 +31,9 @@
                                     @forelse($marcas as $marca)
                                         <tr>
                                             <td class="text-center">{{ $marca->id }}</td>
+                                            <td>
+                                                <img width="50px" height="50px" src="{{ asset($marca->url_logo) }}" alt="">
+                                            </td>
                                             <td class="text-center">{{ $marca->nome }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group">

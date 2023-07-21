@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('marcas.store') }}" method="POST" id="form-marcas">
+                <form action="{{ route('marcas.store') }}" method="POST" id="form-marcas" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-sm-12">
@@ -15,7 +15,7 @@
                         </div>
                         <div class="col-sm-12">
                             <label for="formFile" class="form-label">Logo...</label>
-                            <input class="form-control" type="file" id="file_logo">
+                            <input class="form-control" type="file" id="file_logo" name="file_logo">
                         </div>
                     </div>
 

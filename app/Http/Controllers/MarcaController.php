@@ -21,6 +21,13 @@ class MarcaController extends Controller
         try{
             $marca = new Marca();
             $marca->nome = $request->nome;
+
+            if($request->hasFile('file_logo')){
+                $photo = $request->file('file_logo');
+                $filename = time() . "." . $photo->getClientOriginalExtension();
+                $photo->move(public_path('photos'), $filename);
+            }
+            $marca->url_logo = 'photos/'. $filename;
             $marca->save();
 
             return redirect()->route('marcas');
