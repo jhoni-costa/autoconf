@@ -28,8 +28,8 @@ class Veiculo extends Model
     public function modelo(){
         return $this->belongsTo(Modelo::class, 'id_modelo');
     }
-    
+
     public function fotos(){
-        return $this->hasMany(VeiculoFoto::class, 'id_veiculo');
+        return $this->hasMany(VeiculoFoto::class, 'id_veiculo')->where('ativo', 1);
     }
 }

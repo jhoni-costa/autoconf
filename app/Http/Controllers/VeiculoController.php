@@ -35,15 +35,19 @@ class VeiculoController extends Controller
 
     public function edit($id)
     {
-        $veiculo = Veiculo::find($id);
-        $modelo = Modelo::find($id);
+        $veiculo = Veiculo::with('marca', 'modelo', 'fotos')->find($id);
         $marcas = Marca::where(['ativo' => 1])->get();
+        $modelos = Modelo::where(['id_marca' => $veiculo->id_marca, 'ativo' => 1])->get();
 
         $arrayProps = [
-            'modelo' => $modelo,
-            'marcas' => $marcas
+            'veiculo' => $veiculo,
+            'modelos' => $modelos,
+            'marcas' => $marcas,
+            'arrayAnos'  => Utils::arrayAnos(),
+            'cores' => Utils::getCores(),
         ];
-        return view('modelos.edit', $arrayProps);
+
+        return view('veiculos.edit', $arrayProps);
     }
 
     public function store(Request $request)
@@ -98,13 +102,20 @@ class VeiculoController extends Controller
     public function update(Request $request)
     {
         try {
-            $modelo = Modelo::find($request->id);
-            $modelo->nome = $request->nome;
-            $modelo->id_marca = $request->id_marca;
+            $veiculo = Veiculo::find($request->id);
+            $veiculo->id_marca = $request->id_marca;
+            $veiculo->id_modelo = $request->id_modelo;
+            $veiculo->descricao = $request->descricao;
+            $veiculo->preco = $request->preco;
+            $veiculo->cor = $request->cor;
+            $veiculo->ano_fabricacao = $request->ano_fabricacao;
+            $veiculo->ano_modelo = $request->ano_modelo;
+            $veiculo->placa = $request->placa;
+            $veiculo->quilometragem = $request->quilometragem;
 
-            $modelo->save();
+            $veiculo->save();
 
-            return redirect()->route('modelos');
+            return redirect()->route('veiculos.edit', $request->id);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -112,8 +123,14 @@ class VeiculoController extends Controller
 
     public function delete(Request $request)
     {
-        $modelo = Modelo::find($request->id);
-        $modelo->ativo = 0;
-        $modelo->save();
+        $veiculo = Veiculo::find($request->id);
+        $veiculo->ativo = 0;
+        $veiculo->save();
+
+        $fotos = VeiculoFoto::where(['id_veiculo' => $veiculo->id, 'ativo' => 1])->get();
+        foreach($fotos as $foto){
+            $foto->ativo = 0;
+            $foto->save();
+        }
     }
 }

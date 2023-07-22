@@ -1,28 +1,5 @@
-<script>
-    remove = (id) => {
-        if (confirm('Deseja realmente excluir esta marca?')) {
-
-            $.ajax({
-                    url: '{{ route('marcas.delete') }}',
-                    type: 'post',
-                    data: {
-                        "id": id,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    beforeSend: function() {
-                        //                $("#resultado").html("ENVIANDO...");
-                    }
-                })
-                .done(function(ret) {
-                    alert("Marca removida com sucesso!");
-                    window.location.reload(true);
-                })
-                .fail(function(jqXHR, textStatus, msg) {
-                    console.log(jqXHR, textStatus, msg);
-                });
-        }
-    }
-</script>
+<script></script>
+<script type="text/javascript" src="{{ asset('js\veiculos.js') }}"></script>
 
 @extends('layouts.app')
 
@@ -48,7 +25,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Veiculo</th>
+                                        <th>Marca</th>
                                         <th>Descrição</th>
+                                        <th>Ano/Modelo</th>
+                                        <th>Cor</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -61,7 +41,11 @@
                                                     src="{{ asset($marca->url_logo) }}" alt="">
                                             </td> --}}
                                             <td class="text-center">{{ $veiculo->modelo->nome }}</td>
+                                            <td class="text-center">{{ $veiculo->marca->nome }}</td>
                                             <td class="text-center">{{ $veiculo->descricao }}</td>
+                                            <td class="text-center">{{ $veiculo->ano_modelo }} /
+                                                {{ $veiculo->ano_fabricacao }}</td>
+                                            <td class="text-center">{{ $veiculo->cor }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group"
                                                     aria-label="Basic mixed styles example">
@@ -69,7 +53,8 @@
                                                         class="btn btn-warning">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <button type="button" onclick="remove({{ $veiculo->id }})"
+                                                    <button type="button"
+                                                        onclick="remove({{ $veiculo->id }}, '{{ route('veiculos.delete') }}', '{{ csrf_token() }}')"
                                                         class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                 </div>
 
@@ -77,8 +62,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-
-                                            <td class="text-center" colspan="3">Nenhum registro encontrado</td>
+                                            <td class="text-center" colspan="7">Nenhum registro encontrado</td>
                                         </tr>
                                     @endforelse
 
