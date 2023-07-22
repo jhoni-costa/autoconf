@@ -23,7 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::middleware(['auth'])->group(function(){
-    
+
     Route::group(['prefix' => 'marcas'], function (){
         Route::get('/', [App\Http\Controllers\MarcaController::class, 'index'])->name('marcas');
         Route::post('/', [App\Http\Controllers\MarcaController::class, 'store'])->name('marcas.store');
@@ -39,5 +39,5 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/edit/{id}', [App\Http\Controllers\ModeloController::class, 'edit'])->name('modelos.edit');
         Route::post('/delete', [App\Http\Controllers\ModeloController::class, 'delete'])->name('modelos.delete');
     });
-    
+
 });

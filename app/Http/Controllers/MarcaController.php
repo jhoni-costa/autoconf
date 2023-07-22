@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
-    
+
     public function index()
     {
-        $marcas = Marca::where(['ativo' => 1])->get();
+        $marcas = Marca::where(['ativo' => 1])->paginate(5);
         $arrayProps = [
             'marcas' => $marcas
         ];
@@ -55,7 +55,7 @@ class MarcaController extends Controller
                 $photo->move(public_path('photos'), $filename);
                 $marca->url_logo = 'photos/'. $filename;
             }
-            
+
             $marca->save();
 
             return redirect()->route('marcas');
@@ -69,5 +69,5 @@ class MarcaController extends Controller
         $marca->ativo = 0;
         $marca->save();
     }
-    
+
 }

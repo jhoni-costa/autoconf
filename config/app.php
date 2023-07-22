@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'name_sys' => env('NAME_SYS', 'Autoconf'),
+    'name_sys' => env('NAME_SYS', 'autoconf'),
 
     /*
     |--------------------------------------------------------------------------

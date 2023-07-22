@@ -81,10 +81,17 @@
                                             <td class="text-center" colspan="3">Nenhum registro encontrado</td>
                                         </tr>
                                     @endforelse
+
                                 </tbody>
                             </table>
 
                         </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div style="margin-top: 1rem">
+                        {{ $marcas->links() }}
                     </div>
                 </div>
             </div>
