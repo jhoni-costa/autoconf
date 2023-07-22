@@ -160,14 +160,15 @@
                         <div class="col-sm-2">
                             <div class="card">
 
-                                <div class="card-header"> {{ $foto->nome }}
-                                    <button type="button" class="btn-close"></button>
+                                <div class="card-header">
+                                    <button type="button" class="btn-close float-end"></button>
                                 </div>
                                 <div class="card-body">
                                     <img class="img-fluid rounded mx-auto d-block"
                                         style="max-height: 120px; max-width: 120px" src="{{ asset($foto->url) }}"
                                         alt="">
                                 </div>
+                                <div class="card-footer" style="font-size: 7pt">{{ $foto->nome }}</div>
                             </div>
                         </div>
                     @endforeach

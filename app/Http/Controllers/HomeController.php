@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Veiculo;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $veiculos = Veiculo::with('marca', 'modelo', 'fotos')
+        ->where(['ativo' => 1])
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+        $arrayProps = [
+            'veiculos' => $veiculos
+        ];
+        return view('home', $arrayProps);
     }
 }

@@ -10,7 +10,7 @@ class MarcaController extends Controller
 
     public function index()
     {
-        $marcas = Marca::where(['ativo' => 1])->paginate(5);
+        $marcas = Marca::where(['ativo' => 1])->orderBy('created_at', 'desc')->paginate(5);
         $arrayProps = [
             'marcas' => $marcas
         ];

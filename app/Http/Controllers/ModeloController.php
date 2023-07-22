@@ -10,7 +10,7 @@ class ModeloController extends Controller
 {
     public function index()
     {
-        $modelos = Modelo::with('marca')->where(['ativo' => 1])->paginate(5);
+        $modelos = Modelo::with('marca')->where(['ativo' => 1])->orderBy('created_at', 'desc')->paginate(5);
         $marcas = Marca::where(['ativo' => 1])->get();
 
         $arrayProps = [
