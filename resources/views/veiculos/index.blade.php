@@ -3,7 +3,7 @@
         if (confirm('Deseja realmente excluir esta marca?')) {
 
             $.ajax({
-                    url: '{{ route('modelos.delete') }}',
+                    url: '{{ route('marcas.delete') }}',
                     type: 'post',
                     data: {
                         "id": id,
@@ -32,8 +32,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <button type="button" class="btn btn-small btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modal-form-marcas">Cadastrar</button>
+                        <a type="button" class="btn btn-small btn-primary" href="{{ route('veiculos.new') }}">Cadastrar</a>
+
                     </div>
 
                     <div class="card-body">
@@ -47,25 +47,29 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Modelo</th>
-                                        <th>Marca</th>
+                                        <th>Veiculo</th>
+                                        <th>Descrição</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    @forelse($modelos as $modelo)
+                                    @forelse($veiculos as $veiculo)
                                         <tr>
-                                            <td class="text-center">{{ $modelo->id }}</td>
-                                            <td class="text-center">{{ $modelo->nome }}</td>
-                                            <td class="text-center">{{ $modelo->marca->nome }}</td>
+                                            <td class="text-center">{{ $veiculo->id }}</td>
+                                            {{-- <td>
+                                                <img style="max-width: 50px; max-height: 50px"
+                                                    src="{{ asset($marca->url_logo) }}" alt="">
+                                            </td> --}}
+                                            <td class="text-center">{{ $veiculo->modelo->nome }}</td>
+                                            <td class="text-center">{{ $veiculo->descricao }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group"
                                                     aria-label="Basic mixed styles example">
-                                                    <a type="button" href='{{ route('modelos.edit', $modelo->id) }}'
+                                                    <a type="button" href='{{ route('veiculos.edit', $veiculo->id) }}'
                                                         class="btn btn-warning">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <button type="button" onclick="remove({{ $modelo->id }})"
+                                                    <button type="button" onclick="remove({{ $veiculo->id }})"
                                                         class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                 </div>
 
@@ -73,23 +77,25 @@
                                         </tr>
                                     @empty
                                         <tr>
+
                                             <td class="text-center" colspan="3">Nenhum registro encontrado</td>
                                         </tr>
                                     @endforelse
+
                                 </tbody>
                             </table>
 
                         </div>
                     </div>
+
                 </div>
                 <div class="row">
-                <div style="margin-top: 1rem">
-                    {{ $modelos->links() }}
+                    <div style="margin-top: 1rem">
+                        {{ $veiculos->links() }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    @include('modelos.form')
+        @include('marcas.form')
     </div>
 @endsection

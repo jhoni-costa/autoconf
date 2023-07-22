@@ -31,13 +31,23 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/edit/{id}', [App\Http\Controllers\MarcaController::class, 'edit'])->name('marcas.edit');
         Route::post('/delete', [App\Http\Controllers\MarcaController::class, 'delete'])->name('marcas.delete');
     });
-
+    
     Route::group(['prefix' => 'modelos'], function (){
         Route::get('/', [App\Http\Controllers\ModeloController::class, 'index'])->name('modelos');
         Route::post('/', [App\Http\Controllers\ModeloController::class, 'store'])->name('modelos.store');
         Route::post('/update', [App\Http\Controllers\ModeloController::class, 'update'])->name('modelos.update');
         Route::get('/edit/{id}', [App\Http\Controllers\ModeloController::class, 'edit'])->name('modelos.edit');
         Route::post('/delete', [App\Http\Controllers\ModeloController::class, 'delete'])->name('modelos.delete');
+        Route::post('/modelos', [App\Http\Controllers\ModeloController::class, 'modelos'])->name('modelos.marca');
+    });
+    
+    Route::group(['prefix' => 'veiculos'], function (){
+        Route::get('/', [App\Http\Controllers\VeiculoController::class, 'index'])->name('veiculos');
+        Route::get('/new', [App\Http\Controllers\VeiculoController::class, 'new'])->name('veiculos.new');
+        Route::post('/', [App\Http\Controllers\VeiculoController::class, 'store'])->name('veiculos.store');
+        Route::post('/update', [App\Http\Controllers\VeiculoController::class, 'update'])->name('veiculos.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\VeiculoController::class, 'edit'])->name('veiculos.edit');
+        Route::post('/delete', [App\Http\Controllers\VeiculoController::class, 'delete'])->name('veiculos.delete');
     });
 
 });
