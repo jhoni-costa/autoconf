@@ -17,35 +17,44 @@
                             </div>
                         @endif
                         <div class="row">
-                            <form action="{{ route('marcas.update') }}" method="POST" id="form-marcas"
+                            <form action="{{ route('modelos.update') }}" method="POST" id="form-modelos"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
 
-                                    <div class="col-sm-12 position-relative top-0 start-0" style="display: flex; justify-content: center; align-items: center">
-                                        <img class="img-fluid" style="max-height: 250px; max-width: 250px" src="{{ asset($marca->url_logo) }}" alt="">
-                                    </div>
                                     <div class="col-sm-12">
-                                        <input type="hidden" id="id" name='id'value="{{ $marca->id }}">
+                                        <input type="hidden" id="id" name='id' value="{{ $modelo->id }}">
                                     </div>
                                     <div class="col-sm-12">
                                         <label for="nome" class="form-label">Nome:</label>
-                                        <input type="text" class="form-control" id="nome" name='nome'value="{{ $marca->nome }}" placeholder="">
+                                        <input type="text" required class="form-control" id="nome" name='nome'
+                                            value="{{ $modelo->nome }}" placeholder="Modelo ...">
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-12">
-                                        <label for="formFile" class="form-label">Logo...</label>
-                                        <input class="form-control" type="file" id="file_logo" name="file_logo">
+                                        <label for="id_marca" class="form-label">Marca:</label>
+                                        <select required class="form-select" id='id_marca' name='id_marca'>
+                                            <option value="">[Selecione]</option>
+                                            @foreach ($marcas as $marca)
+                                                <option {{ $marca->id == $modelo->id_marca ? 'selected' : '' }}
+                                                    value="{{ $marca->id }}">{{ $marca->nome }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="col-sm-12" style="padding-top: .5rem">
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </div>
+
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @include('marcas.form')
     </div>
 @endsection

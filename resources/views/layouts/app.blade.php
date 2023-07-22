@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('marcas') }}">Marcas</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('modelos') }}">Modelos</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
