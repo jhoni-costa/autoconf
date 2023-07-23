@@ -133,4 +133,42 @@ class VeiculoController extends Controller
             $foto->save();
         }
     }
+
+    public function addFotos(Request $request){
+        try{
+
+            $numFotos = (6 - count(VeiculoFoto::where(['id_veiculo' => $request->id_veiculo, 'ativo' => 1])->get()));
+            // dd($numFotos);
+            $this->validate($request, [
+                'fotos' => "required|array|max:{$numFotos}",
+                'fotos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            if ($request->hasFile('fotos')) {
+                foreach ($request->file('fotos') as $foto) {
+                    $filename = time() . '-' . $foto->getClientOriginalName();
+                    $foto->move(public_path('photos'), $filename);
+
+                    $veiculoFoto = new VeiculoFoto();
+                    $veiculoFoto->id_veiculo = $request->id_veiculo;
+                    $veiculoFoto->nome = $foto->getClientOriginalName();
+                    $veiculoFoto->url = "photos/" . $filename;
+                    $veiculoFoto->save();
+                }
+            }
+            return redirect()->route('veiculos.edit', $request->id_veiculo);
+            }catch(\Exception $e){
+                return response()->json(['error' => $e->getMessage()]);
+            }
+    }
+
+    public function deleteFoto(Request $request){
+        try{
+            $foto = VeiculoFoto::find($request->id);
+            $foto->ativo = 0;
+            $foto->save();
+        }catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 }

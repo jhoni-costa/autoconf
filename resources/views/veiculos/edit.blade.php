@@ -159,9 +159,9 @@
                     @foreach ($veiculo->fotos as $foto)
                         <div class="col-sm-2">
                             <div class="card">
-
                                 <div class="card-header">
-                                    <button type="button" class="btn-close float-end"></button>
+                                    <button type="button" onclick="removeFoto({{ $foto->id }}, '{{ route('veiculos.deleteFoto')}}', '{{ csrf_token() }}')"
+                                        class="btn-close float-end"></button>
                                 </div>
                                 <div class="card-body">
                                     <img class="img-fluid rounded mx-auto d-block"
@@ -175,14 +175,23 @@
                 </div>
             </div>
             <div class="card-footer">
-
                 <div class="row">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label for="formFile" class="form-label">Fotos</label>
+                    <div class="col-12">
+                        <label for="formFile" class="form-label">Adicionar Fotos: </label>
+                    </div>
+                    <form class="row row-cols-lg-auto g-3 align-items-center" method="POST"
+                        action="{{ route('veiculos.addFotos') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="col-12">
+                            <input type="hidden" id="id_veiculo" name="id_veiculo" value='{{ $veiculo->id }}'>
                             <input required class="form-control" type="file" id="fotos" name="fotos[]" multiple>
                         </div>
-                    </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
