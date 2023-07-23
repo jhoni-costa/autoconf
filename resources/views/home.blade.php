@@ -10,10 +10,10 @@
                 @foreach ($veiculos as $veiculo)
                     <div class="col-sm-4">
                         <div class="card">
-                            <div id="carouselExampleIndicators" class="carousel slide">
+                            <div id="carouselExampleIndicators_{{$veiculo->id}}" class="carousel slide">
                                 <div class="carousel-indicators">
                                     @foreach ($veiculo->fotos as $foto)
-                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $loop->iteration -1 }}"
+                                    <button type="button" data-bs-target="#carouselExampleIndicators_{{$veiculo->id}}" data-bs-slide-to="{{ $loop->iteration -1 }}"
                                         class="active" aria-current="true" aria-label="Slide {{ $loop->iteration }}"></button>
 
                                     @endforeach
@@ -26,12 +26,12 @@
                                     @endforeach
                                 </div>
                                 <button class="carousel-control-prev" type="button"
-                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    data-bs-target="#carouselExampleIndicators_{{$veiculo->id}}" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
                                 <button class="carousel-control-next" type="button"
-                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    data-bs-target="#carouselExampleIndicators_{{$veiculo->id}}" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
@@ -39,7 +39,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$veiculo->marca->nome}} - {{ $veiculo->modelo->nome }} - {{ $veiculo->ano_fabricacao}}/{{$veiculo->ano_modelo}}</h5>
                                 <p class="card-text">{{$veiculo->descricao}}</p>
-                                <a href="#" class="btn btn-primary">Ver +</a>
+                                <p>R$ {{ $veiculo->preco}}</p>
                             </div>
                         </div>
                     </div>

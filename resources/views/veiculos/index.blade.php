@@ -1,4 +1,3 @@
-<script></script>
 <script type="text/javascript" src="{{ asset('js\veiculos.js') }}"></script>
 
 @extends('layouts.app')

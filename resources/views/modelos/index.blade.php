@@ -1,28 +1,4 @@
-<script>
-    remove = (id) => {
-        if (confirm('Deseja realmente excluir esta marca?')) {
-
-            $.ajax({
-                    url: '{{ route('modelos.delete') }}',
-                    type: 'post',
-                    data: {
-                        "id": id,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    beforeSend: function() {
-                        //                $("#resultado").html("ENVIANDO...");
-                    }
-                })
-                .done(function(ret) {
-                    alert("Marca removida com sucesso!");
-                    window.location.reload(true);
-                })
-                .fail(function(jqXHR, textStatus, msg) {
-                    console.log(jqXHR, textStatus, msg);
-                });
-        }
-    }
-</script>
+<script type="text/javascript" src="{{ asset('js\modelos.js') }}"></script>
 
 @extends('layouts.app')
 
@@ -65,7 +41,7 @@
                                                         class="btn btn-warning">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <button type="button" onclick="remove({{ $modelo->id }})"
+                                                    <button type="button" onclick="remove({{ $modelo->id }}, '{{ route('modelos.delete') }}', '{{ csrf_token() }}')"
                                                         class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                 </div>
 
