@@ -171,4 +171,28 @@ class VeiculoController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    public function buscar(Request $request){
+        $veiculos = Veiculo::with('marca', 'modelo', 'fotos')
+        ->where(['ativo' => 1])
+        ->where(function($query) use ($request){
+            $query->where('descricao', 'LIKE', "%{$request->buscar}%")
+            ->orWhere('cor', 'LIKE', "%{$request->buscar}%")
+            ->orWhere('placa', 'LIKE', "%{$request->buscar}%")
+            ;
+        })
+        ->orWhereHas('marca', function($query) use ($request){
+            $query->where('nome', 'LIKE', "%{$request->buscar}%");
+        })
+        ->orWhereHas('modelo', function($query) use ($request){
+            $query->where('nome', 'LIKE', "%{$request->buscar}%");
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(5);
+  
+        $arrayProps = [
+            "veiculos" => $veiculos,
+        ];
+        return view('veiculos.index', $arrayProps);
+    }
 }

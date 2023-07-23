@@ -17,7 +17,8 @@ class MarcaController extends Controller
         return view('marcas.index', $arrayProps);
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $marca = Marca::find($id);
         $arrayProps = [
             'marca' => $marca
@@ -25,49 +26,66 @@ class MarcaController extends Controller
         return view('marcas.edit', $arrayProps);
     }
 
-    public function store(Request $request){
-        try{
+    public function store(Request $request)
+    {
+        try {
             $marca = new Marca();
             $marca->nome = $request->nome;
 
-            if($request->hasFile('file_logo')){
+            if ($request->hasFile('file_logo')) {
                 $photo = $request->file('file_logo');
                 $filename = time() . "." . $photo->getClientOriginalExtension();
                 $photo->move(public_path('photos'), $filename);
             }
-            $marca->url_logo = 'photos/'. $filename;
+            $marca->url_logo = 'photos/' . $filename;
             $marca->save();
 
             return redirect()->route('marcas');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             throw $e;
         }
     }
 
-    public function update(Request $request){
-        try{
+    public function update(Request $request)
+    {
+        try {
             $marca = Marca::find($request->id);
             $marca->nome = $request->nome;
 
-            if($request->hasFile('file_logo')){
+            if ($request->hasFile('file_logo')) {
                 $photo = $request->file('file_logo');
                 $filename = time() . "." . $photo->getClientOriginalExtension();
                 $photo->move(public_path('photos'), $filename);
-                $marca->url_logo = 'photos/'. $filename;
+                $marca->url_logo = 'photos/' . $filename;
             }
 
             $marca->save();
 
             return redirect()->route('marcas');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             throw $e;
         }
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $marca = Marca::find($request->id);
         $marca->ativo = 0;
         $marca->save();
     }
 
+    public function buscar(Request $request)
+    {
+        $marcas = Marca::where(['ativo' => 1])
+            ->where(function ($query) use ($request) {
+                $query->where('nome', 'LIKE', "%{$request->buscar}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        $arrayProps = [
+            "marcas" => $marcas,
+        ];
+        return view('marcas.index', $arrayProps);
+    }
 }

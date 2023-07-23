@@ -81,4 +81,25 @@ class ModeloController extends Controller
             throw $e;
         }
     }
+
+    public function buscar(Request $request){
+        $marcas = Marca::where(['ativo' => 1])->get();
+
+        $modelos = Modelo::with('marca')
+        ->where(['ativo' => 1])
+        ->where(function($query) use ($request){
+            $query->where('nome', 'LIKE', "%{$request->buscar}%");
+        })
+        ->orWhereHas('marca', function($query) use ($request){
+            $query->where('nome', 'LIKE', "%{$request->buscar}%");
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(5);
+  
+        $arrayProps = [
+            "modelos" => $modelos,
+            "marcas" => $marcas
+        ];
+        return view('modelos.index', $arrayProps);
+    }
 }

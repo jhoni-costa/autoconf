@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/update', [App\Http\Controllers\MarcaController::class, 'update'])->name('marcas.update');
         Route::get('/edit/{id}', [App\Http\Controllers\MarcaController::class, 'edit'])->name('marcas.edit');
         Route::post('/delete', [App\Http\Controllers\MarcaController::class, 'delete'])->name('marcas.delete');
+        Route::post('/buscar', [App\Http\Controllers\MarcaController::class, 'buscar'])->name('marcas.buscar');
     });
 
     Route::group(['prefix' => 'modelos'], function (){
@@ -39,6 +40,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/edit/{id}', [App\Http\Controllers\ModeloController::class, 'edit'])->name('modelos.edit');
         Route::post('/delete', [App\Http\Controllers\ModeloController::class, 'delete'])->name('modelos.delete');
         Route::post('/modelos', [App\Http\Controllers\ModeloController::class, 'modelos'])->name('modelos.marca');
+        Route::post('/buscar', [App\Http\Controllers\ModeloController::class, 'buscar'])->name('modelos.buscar');
+
     });
 
     Route::group(['prefix' => 'veiculos'], function (){
@@ -50,6 +53,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/edit/{id}', [App\Http\Controllers\VeiculoController::class, 'edit'])->name('veiculos.edit');
         Route::post('/delete', [App\Http\Controllers\VeiculoController::class, 'delete'])->name('veiculos.delete');
         Route::post('/deleteFoto', [App\Http\Controllers\VeiculoController::class, 'deleteFoto'])->name('veiculos.deleteFoto');
+        Route::post('/buscar', [App\Http\Controllers\VeiculoController::class, 'buscar'])->name('veiculos.buscar');
     });
 
 });

@@ -20,6 +20,20 @@
                             </div>
                         @endif
                         <div class="row">
+                            <form class="row row-cols-lg-auto g-3 align-items-center" method="POST" action="{{ route('marcas.buscar') }}">
+                                @csrf
+                                <div class="col-12">
+                                    <input class="form-control" type="text" id="buscar" name="buscar"
+                                        placeholder="Busca...">
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="row">
                             <table class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
