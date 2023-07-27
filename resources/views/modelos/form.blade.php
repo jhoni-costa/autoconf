@@ -13,7 +13,7 @@
                         <div class="col-sm-12">
                             <label for="nome" class="form-label">Nome:</label>
                             <input type="text" required class="form-control" id="nome" name='nome'
-                                placeholder="Marca ...">
+                                placeholder="Modelo ...">
                         </div>
 
                     </div>
