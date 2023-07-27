@@ -63,7 +63,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td class="text-center" colspan="3">Nenhum registro encontrado</td>
+                                            <td class="text-center" colspan="4">Nenhum registro encontrado</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
